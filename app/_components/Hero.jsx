@@ -1,7 +1,7 @@
 import React from "react";
 
 const Hero = () => {
-  
+
   return (
     <div>
       <section className="bg-gray-50">
@@ -23,7 +23,7 @@ const Hero = () => {
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <a
                 className="block w-full  rounded bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-900 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-                href="#"
+                href="/dashboard"
               >
                 Lets's Go   
               </a>
