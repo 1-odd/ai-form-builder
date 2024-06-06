@@ -9,7 +9,7 @@ function DashboardLayout({children}) {
        <div className=" md:w-64 fixed">
         <SideNavbar/>
        </div>
-       <div className=" md:ml-64">
+       <div className="  md:ml-64">
           {children}
        </div>
         
