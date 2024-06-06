@@ -65,6 +65,9 @@
       --ring: 0 0% 83.1%;
     }
   }
+  body {
+    background-color: white;
+  } 
 
   @layer base {
     * {
@@ -72,5 +75,6 @@
     }
     body {
       @apply bg-background text-foreground;
+      @apply bg-default;
     }
   }

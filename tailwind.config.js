@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundColor: {
+        'default': '#ffffff', // This sets the default background color to white
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

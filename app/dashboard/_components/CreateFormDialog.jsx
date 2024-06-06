@@ -26,7 +26,7 @@ const CreateFormDialog = () => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState();
     const [loading, setLoading] = React.useState();
-    const [result , setResult] =React.useState()
+    
 
     const route = useRouter();
 
