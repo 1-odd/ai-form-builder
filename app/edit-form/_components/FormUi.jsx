@@ -14,10 +14,10 @@ import React from "react";
 import EditField from "./EditField";
 
 
-const FormUi = ({ jsonResult , onUpdate , handleDelete , selectedTheme }) => {
+const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable = true }) => {
 
-  
-  
+
+
   return (
     <div className="border p-5 md:w-[600px] rounded-lg " data-theme={selectedTheme}>
       <h2 className="font-bold text-center text-2xl">
@@ -92,10 +92,11 @@ const FormUi = ({ jsonResult , onUpdate , handleDelete , selectedTheme }) => {
               />
             </div>
           )}
-          <div>
-            <EditField  defaultValue = {field} handleUpdate={(value)=>onUpdate(value,index)}
-            handleDelete={()=> handleDelete(index)} />
-          </div>
+          {editTable && <div>
+            <EditField defaultValue={field}
+              handleUpdate={(value) => onUpdate(value, index)}
+              handleDelete={() => handleDelete(index)} />
+          </div>}
         </div>
 
       ))}

@@ -67,8 +67,8 @@ const Controller = ({selectedTheme , selectedBackground}) => {
       >{showMore>6 ? 'Show less' : 'Show more'}</Button>
 
       <div className='my-3 flex items-center'>
-        <h2 className='text-xl font-semibold'>Note: <h3 className='text-sm'>You can choose any theme and background for your form 
-          it will remain same after the preview of the form.</h3></h2>
+        <h2 className='text-xl '>Note: <span className='text-sm text-gray-700'>You can choose any theme and background for your form 
+          it will remain same after the preview of the form.</span></h2>
       </div>
 
     </div>

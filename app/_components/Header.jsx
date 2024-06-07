@@ -3,14 +3,17 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 const Header = () => {
   const { user, isSignedIn } = useUser();
   const router = useRouter();
+  const path = usePathname();
 
-  return (
+
+
+  return !path.includes('/live-preview') && (
     <div className=" p-5 border-b-2   shadow-sm ">
       <div className=" flex items-center justify-between">
         <Image src={"/logo.svg"} width={180} height={50} alt="logo" />
