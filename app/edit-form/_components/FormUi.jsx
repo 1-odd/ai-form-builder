@@ -13,12 +13,13 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import EditField from "./EditField";
 
-const FormUi = ({ jsonResult , onUpdate , handleDelete}) => {
 
+const FormUi = ({ jsonResult , onUpdate , handleDelete , selectedTheme }) => {
 
   
+  
   return (
-    <div className="border p-5 md:w-[600px] rounded-lg">
+    <div className="border p-5 md:w-[600px] rounded-lg " data-theme={selectedTheme}>
       <h2 className="font-bold text-center text-2xl">
         {jsonResult?.formTitle}
       </h2>
@@ -34,7 +35,7 @@ const FormUi = ({ jsonResult , onUpdate , handleDelete}) => {
                 {field?.fieldLabel}
               </label>
               <Select>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-transparent">
                   <SelectValue placeholder={field.placeholder} />
                 </SelectTrigger>
                 <SelectContent>
@@ -84,7 +85,7 @@ const FormUi = ({ jsonResult , onUpdate , handleDelete}) => {
               <label className="text-xs text-gray-500">
                 {field?.fieldLabel}
               </label>
-              <Input
+              <Input className='bg-transparent'
                 type={field?.fieldType}
                 placeholder={field?.placeholder}
                 name={field?.fieldName}
@@ -98,6 +99,7 @@ const FormUi = ({ jsonResult , onUpdate , handleDelete}) => {
         </div>
 
       ))}
+      <button className=" btn btn-primary">Submit</button>
     </div>
   );
 };
