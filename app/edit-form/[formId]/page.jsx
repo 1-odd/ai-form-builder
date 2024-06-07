@@ -5,12 +5,15 @@ import { useUser } from '@clerk/nextjs'
 import { and, eq } from 'drizzle-orm'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormUi from '../_components/FormUi'
+import { toast } from 'sonner'
 
 const EditForm = ({params}) => {
 
-    const [jsonResult , setJsonResult] = React.useState()
+    const [jsonResult , setJsonResult] = React.useState([])
+    const [updateTrigger , setUpdateTrigger] = React.useState();
+    const [record , setRecord] = useState();
    
     const {user} = useUser();
     const router = useRouter();
@@ -24,13 +27,50 @@ const EditForm = ({params}) => {
         const result = await db.select().from(JsonForms)
         .where( and(  eq(JsonForms.id,params?.formId) , 
         eq(JsonForms.createdBy,user?.primaryEmailAddress?.emailAddress) ))
+        setRecord(result[0])
         setJsonResult(JSON.parse(result[0].jsonform))
        
     }
 
-
+    useEffect(() => {
+        if(updateTrigger){
+            setJsonResult(jsonResult);
+            updateFormDb();
+        }
+        
+    }, [updateTrigger])
     
 
+
+    const onFieldUpdate = (value,index) =>{
+        
+
+        jsonResult.formFields[index].fieldLabel = value.label;
+        jsonResult.formFields[index].placeholder = value.placeholder;
+        setUpdateTrigger(Date.now())
+    }
+
+
+
+    const updateFormDb = async  ()=>{
+        const result = await db.update(JsonForms)
+        .set({
+            jsonform: jsonResult
+        }).where(and(eq(JsonForms.id , record.id) ,
+         eq( JsonForms.createdBy , user?.primaryEmailAddress?.emailAddress)  ))
+
+         if(result){
+            toast.success('Form updated successfully');
+         }
+
+         
+    }
+
+    const onDelete = (indexToRemove) =>{
+        const result = jsonResult.formFields.filter((item,index)=>index != indexToRemove )
+        jsonResult.formFields = result ;
+        setUpdateTrigger(Date.now());
+    }
 
 
   return (
@@ -43,7 +83,8 @@ const EditForm = ({params}) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="p-5 border rounded-lg shadow-md">Controller</div>
             <div className=" md:col-span-2 border rounded-lg p-5  flex items-center justify-center">
-                <FormUi  jsonResult = {jsonResult} />
+                <FormUi  jsonResult = {jsonResult} onUpdate={onFieldUpdate}
+                 handleDelete={(index)=> onDelete(index)} />
             </div>
         </div>
     </div>

@@ -17,6 +17,7 @@ import moment from "moment";
 import { useRouter } from "next/navigation";
 
 import React from "react";
+import { toast } from "sonner";
 
 const CreateFormDialog = () => {
 
@@ -49,6 +50,7 @@ const CreateFormDialog = () => {
             }
             
             setLoading(false)
+            toast.success('Form created successfully')
 
             
         }
