@@ -14,7 +14,7 @@ const LivePreview = ({params}) => {
    
 
     useEffect(()=>{
-        console.log(params.formId);   
+           
         params && getFormData(); 
     },[params])
 
@@ -44,7 +44,7 @@ const LivePreview = ({params}) => {
         <Link href={`/`} className='flex gap-2 items-center bg-black text-white px-3 py-2 
         rounded-full fixed  bottom-5 left-5 cursor-pointer' 
         >
-            <Image src={'/logo.png'} width={30} height={30} />
+            <Image alt='My logo' src={'/logo.png'} width={30} height={30} />
             Build your own AI form
         </Link>
     </div>
