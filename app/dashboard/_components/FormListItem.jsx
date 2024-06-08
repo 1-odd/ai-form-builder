@@ -18,6 +18,7 @@ import { db } from '@/dbConfigs'
 import { JsonForms } from '@/dbConfigs/schema'
 import { and, eq } from 'drizzle-orm'
 import { toast } from 'sonner'
+import { RWebShare } from 'react-web-share'
   
 
 const FormListItem = ({formData , refreshData}) => {
@@ -77,15 +78,27 @@ const FormListItem = ({formData , refreshData}) => {
         <h2 className=' text-sm text-gray-600 '>{jsonForm?.formHeading}</h2>
         <hr className='my-4' />
         <div className='flex items-center justify-between'>
-            <Button size='sm' variant='outline' className='flex gap-2' > 
-            <Share2 className='h-5 w-5' />Share</Button>
+
+        <RWebShare
+        data={{
+          text: jsonForm?.formHeading,
+          url: process.env.NEXT_PUBLIC_BASE_URL+'/live-preview/'+formData?.id,
+          title: jsonForm?.formTitle,
+        }}
+        onClick={() => console.log("shared successfully!")}
+      >
+        <Button size='sm' variant='outline' className='flex gap-2' > 
+        <Share2 className='h-5 w-5' />Share</Button>
+        
+      </RWebShare>
+
+            
 
 
             <Link href={'/edit-form/'+ formData?.id} >
-
-            <Button size='sm' className='flex gap-2' > <Edit2 className='h-5 w-5' />  Edit</Button>
-
+            <Button size='sm' className='flex gap-2' > <Edit2 className='h-5 w-5' />Edit</Button>
             </Link>
+
         </div>
 
     </div>
