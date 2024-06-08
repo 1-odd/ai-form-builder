@@ -79,7 +79,7 @@ const EditForm = ({params}) => {
         setUpdateTrigger(Date.now());
     }
 
-    const updateControllerFields = async(value,field) =>{
+    const updateControllerFields = async(value,field) =>  {
         const result = await db.update(JsonForms)
         .set({
             [field]: value
@@ -90,7 +90,7 @@ const EditForm = ({params}) => {
             toast.success('Form updated successfully');
          }
     }
-
+    console.log(record?.id)
   return (
     <div className='p-10'>
         <div className=" flex items-center justify-between">
@@ -135,6 +135,7 @@ const EditForm = ({params}) => {
                  onUpdate={onFieldUpdate}
                  handleDelete={(index)=> onDelete(index)}
                  selectedTheme={selectedTheme}
+                 formId={record?.id}
                  />
             </div>
         </div>

@@ -40,6 +40,7 @@ const LivePreview = ({params}) => {
             selectedTheme={record?.theme}
             selectedBackground={record?.background}
             editTable={false}
+            formId={record?.id}
         />
         <Link href={`/`} className='flex gap-2 items-center bg-black text-white px-3 py-2 
         rounded-full fixed  bottom-5 left-5 cursor-pointer' 
