@@ -7,6 +7,7 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/dbConfigs";
@@ -63,6 +64,7 @@ const CreateFormDialog = () => {
         <div>
             <Button onClick={() => setOpen(true)} >+ Create Form</Button>
             <Dialog open={open}  >
+                <DialogTrigger></DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Create new form</DialogTitle>

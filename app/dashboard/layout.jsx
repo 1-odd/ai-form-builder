@@ -5,11 +5,11 @@ import SideNavbar from './_components/SideNavbar'
 function DashboardLayout({children}) {
   return (
     <SignedIn>
-    <div>
-       <div className=" md:w-64 fixed">
+    <div >
+       <div className="  md:w-64 fixed">
         <SideNavbar/>
        </div>
-       <div className="  md:ml-64">
+       <div className=" md:ml-64">
           {children}
        </div>
         

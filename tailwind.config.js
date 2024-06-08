@@ -17,9 +17,6 @@ module.exports = {
       },
     },
     extend: {
-      backgroundColor: {
-        'default': '#ffffff', // This sets the default background color to white
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -27,7 +24,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#A120DE",
+          DEFAULT: "#7f57f1",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -112,8 +109,6 @@ module.exports = {
       "sunset",
     ],
   },
-  
   plugins: [require("tailwindcss-animate"),
-            require('daisyui'),
-  ],
+  require('daisyui'),],
 }
