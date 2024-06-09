@@ -15,7 +15,7 @@ import {
   } from "@/components/ui/alert-dialog"
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/dbConfigs'
-import { JsonForms } from '@/dbConfigs/schema'
+import { JsonForms, userResponses } from '@/dbConfigs/schema'
 import { and, eq } from 'drizzle-orm'
 import { toast } from 'sonner'
 import { RWebShare } from 'react-web-share'
@@ -26,17 +26,40 @@ const FormListItem = ({formData , refreshData}) => {
     const {user} = useUser();
     const jsonForm = JSON.parse(formData.jsonform);
     
-    const deleteForm = async ()=>{
-        const res = await db.delete(JsonForms)
-        .where(and( eq(JsonForms.id , formData?.id) , 
-        eq(JsonForms.createdBy , user?.primaryEmailAddress?.emailAddress ) ));
-
-        if(res){
-            toast.success('form deleted successfully!!')
-            refreshData();
-        }
-
-    }
+    const deleteForm = async () => {
+      try {
+          // Delete related records from userResponses table
+          const deleteResponsesRes = await db
+              .delete(userResponses)
+              .where(eq(userResponses.formRef, formData?.id));
+  
+          // Check if userResponses deletion was successful
+          if (deleteResponsesRes) {
+              // Delete the record from jsonForms table
+              const deleteFormRes = await db
+                  .delete(JsonForms)
+                  .where(
+                      and(
+                          eq(JsonForms.id, formData?.id),
+                          eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)
+                      )
+                  );
+  
+              // Check if jsonForms deletion was successful
+              if (deleteFormRes) {
+                  toast.success('Form deleted successfully!!');
+                  refreshData();
+              } else {
+                  toast.error('Failed to delete form.');
+              }
+          } else {
+              toast.error('Failed to delete related user responses.');
+          }
+      } catch (error) {
+          console.error('Error deleting form:', error);
+          toast.error('An error occurred while deleting the form.');
+      }
+  };
     
   return (
     <div className='border shadow-sm rounded-lg p-4'>

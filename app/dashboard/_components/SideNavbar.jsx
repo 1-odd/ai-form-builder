@@ -2,9 +2,13 @@
 import { Button } from '@/components/ui/button'
 import { LibraryBig, LineChart, MessageSquare, Shield } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import React, {  useEffect, useState } from 'react'
 import { Progress } from "@/components/ui/progress"
 import Link from 'next/link'
+import { db } from '@/dbConfigs'
+import { JsonForms } from '@/dbConfigs/schema'
+import { useUser } from '@clerk/nextjs'
+import { desc, eq } from 'drizzle-orm'
 
 
 const SideNavbar = () => {
@@ -36,7 +40,29 @@ const SideNavbar = () => {
         }
     ]
 
+    const [formList , setFormList] = useState([]);
+    const [progressBar , setProgressBar] = useState(0);
+
     const path = usePathname();
+    const {user} = useUser();
+    
+    const getFormList = async ()=>{
+
+        const result = await db.select().from(JsonForms)
+        .where(eq(JsonForms.createdBy , user?.primaryEmailAddress?.emailAddress))
+        .orderBy(desc(JsonForms.id));
+        setFormList(result);
+
+        const percentage  = (result.length / 5)*100 ;
+        setProgressBar(percentage);
+       
+      } 
+      useEffect(() => {
+        user && getFormList()
+      }, [user])
+
+      
+      
 
 
 
@@ -59,9 +85,9 @@ const SideNavbar = () => {
             </Button>
             <div className=" my-7">
 
-            <Progress value={33} />
+            <Progress value={progressBar} />
             <h2 className=" text-sm mt-2 text-gray-700">
-                <strong>3 </strong>out of <strong>5 </strong>file created
+                <strong>{formList?.length}</strong> out of <strong>5 </strong>file created
             </h2>
             <h2 className=" text-sm mt-3 text-gray-700">
                 Upgrade your plan for genrating unlimited form
