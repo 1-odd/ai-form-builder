@@ -87,6 +87,7 @@ const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable =
   };
 
   
+  
 
   return (
     <form
@@ -140,7 +141,6 @@ const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable =
                 field?.options?.map((item, index) => (
                   <div key={index} className="flex gap-2 items-center">
                     <Checkbox
-                    required={field?.required ? field?.required : field?.fieldRequired}
                       onCheckedChange={(v) => handleCheckboxChange(field?.fieldName, item?.label, v)}
                     />
                     <h2>{item.label}</h2>

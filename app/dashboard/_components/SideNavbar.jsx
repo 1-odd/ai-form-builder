@@ -4,6 +4,7 @@ import { LibraryBig, LineChart, MessageSquare, Shield } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import { Progress } from "@/components/ui/progress"
+import Link from 'next/link'
 
 
 const SideNavbar = () => {
@@ -40,15 +41,15 @@ const SideNavbar = () => {
 
 
   return (
-    <div className=' h-screen shadow-md border bg-white'>
+    <div className=' h-screen shadow-md border '>
 
         <div className=" p-5 ">
         {menuList.map((item,index)=>(
-            <h2 key={index} className={`flex items-center gap-3 p-4 mb-3 hover:bg-primary cursor-pointer
+            <Link href={item.path} key={index} className={`flex items-center gap-3 p-4 mb-3 hover:bg-primary cursor-pointer
             hover:text-white rounded-lg  ${path === item.path && 'bg-primary text-white'} `}    >
                 <item.icon/>
                 {item.name}
-            </h2>
+            </Link>
         ))}
         </div>
 
