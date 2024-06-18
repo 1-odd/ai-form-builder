@@ -6,7 +6,7 @@ function DashboardLayout({children}) {
   return (
     <SignedIn>
     <div >
-       <div className="  md:w-64 fixed">
+       <div className="  fixed md:w-64 hidden md:block">
         <SideNavbar/>
        </div>
        <div className=" md:ml-64">

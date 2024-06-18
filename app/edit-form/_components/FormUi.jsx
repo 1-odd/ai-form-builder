@@ -13,12 +13,13 @@ import React, { useRef } from "react";
 import EditField from "./EditField";
 import { db } from "@/dbConfigs";
 import { userResponses } from "@/dbConfigs/schema";
-import { useUser } from "@clerk/nextjs";
+import { SignInButton,  useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable = true,  formId = 0 }) => {
-  const { user } = useUser();
+const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable = true,  formId = 0 , enabledUserSignIn=false}) => {
+  const { user , isSignedIn } = useUser();
   let formRefe = useRef(null);
 
   
@@ -141,9 +142,9 @@ const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable =
                 field?.options?.map((item, index) => (
                   <div key={index} className="flex gap-2 items-center">
                     <Checkbox
-                      onCheckedChange={(v) => handleCheckboxChange(field?.fieldName, item?.label, v)}
+                      onCheckedChange={(v) => handleCheckboxChange(field?.fieldName, item.label?item.label:item , v)}
                     />
-                    <h2>{item.label}</h2>
+                    <h2>{item.label?item.label:item}</h2>
                   </div>
                 ))
               ) : (
@@ -177,9 +178,20 @@ const FormUi = ({ jsonResult, onUpdate, handleDelete, selectedTheme, editTable =
           )}
         </div>
       ))}
-      <button type="submit" className="btn btn-primary">
+
+      {!enabledUserSignIn?
+        <button type="submit" className="btn btn-primary">
         Submit
-      </button>
+      </button>:
+        isSignedIn ?
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>:
+          <Button>
+            <SignInButton mode="modal" >Sign in before submit</SignInButton>
+          </Button>
+        }
+      
     </form> 
   );
 };

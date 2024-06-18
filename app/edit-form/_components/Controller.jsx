@@ -10,9 +10,10 @@ import {
 import Themes from '@/app/_data/Theme'
 import Gradients from '@/app/_data/GradientBg'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 
 
-const Controller = ({selectedTheme , selectedBackground}) => {
+const Controller = ({selectedTheme , selectedBackground , setUserSignIn}) => {
 
   const [showMore , setShowMore] = React.useState(6);
 
@@ -69,6 +70,11 @@ const Controller = ({selectedTheme , selectedBackground}) => {
       <div className='my-3 flex items-center'>
         <h2 className='text-xl '>Note: <span className='text-sm text-gray-700'>You can choose any theme and background for your form 
           it will remain same after the preview of the form.</span></h2>
+      </div>
+
+      <div className='flex items-center gap-3 my-4 mt-10'>
+        <Checkbox onCheckedChange={(e)=>setUserSignIn(e)} />
+         <h2>Enable user authentication for submit the response.</h2>
       </div>
 
     </div>

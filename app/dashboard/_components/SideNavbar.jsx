@@ -1,5 +1,4 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import { LibraryBig, LineChart, MessageSquare, Shield } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import React, {  useEffect, useState } from 'react'
@@ -9,6 +8,7 @@ import { db } from '@/dbConfigs'
 import { JsonForms } from '@/dbConfigs/schema'
 import { useUser } from '@clerk/nextjs'
 import { desc, eq } from 'drizzle-orm'
+import CreateFormDialog from './CreateFormDialog'
 
 
 const SideNavbar = () => {
@@ -80,9 +80,7 @@ const SideNavbar = () => {
         </div>
 
         <div className=" fixed bottom-7 p-6 w-64 ">
-            <Button className='w-full' >
-               + Create Form
-            </Button>
+             <CreateFormDialog/>
             <div className=" my-7">
 
             <Progress value={progressBar} />

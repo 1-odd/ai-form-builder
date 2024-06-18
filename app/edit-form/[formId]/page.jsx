@@ -15,6 +15,8 @@ import { RWebShare } from 'react-web-share'
 
 const EditForm = ({params}) => {
 
+
+
     const [jsonResult , setJsonResult] = React.useState([])
     const [updateTrigger , setUpdateTrigger] = React.useState();
     const [record , setRecord] = useState();
@@ -23,6 +25,10 @@ const EditForm = ({params}) => {
    
     const {user} = useUser();
     const router = useRouter();
+    
+
+    const fields = jsonResult?.formFields || jsonResult?.form ;
+
     useEffect(() => {
       
        user && getFormData();
@@ -39,6 +45,7 @@ const EditForm = ({params}) => {
         setSelectedBackground(result[0].background)
        
     }
+   
 
     useEffect(() => {
         if(updateTrigger){
@@ -52,9 +59,9 @@ const EditForm = ({params}) => {
 
     const onFieldUpdate = (value,index) =>{
         
-
-        jsonResult.formFields[index].fieldLabel = value.label;
-        jsonResult.formFields[index].placeholder = value.placeholder;
+      
+        fields[index].fieldLabel = value.label;
+        fields[index].placeholder = value.placeholder;
         setUpdateTrigger(Date.now())
     }
 
@@ -75,9 +82,17 @@ const EditForm = ({params}) => {
     }
 
     const onDelete = (indexToRemove) =>{
-        const result = jsonResult.formFields.filter((item,index)=>index != indexToRemove )
-        jsonResult.formFields = result ;
+        
+        const result = fields.filter((item,index)=>index != indexToRemove )
+        if(jsonResult.formFields){
+            jsonResult.formFields = result;
+        }else{
+            jsonResult.form = result;
+        }
         setUpdateTrigger(Date.now());
+        if(result){
+            toast.success('Form field deleted successfully');
+         }
     }
 
     const updateControllerFields = async(value,field) =>  {
@@ -91,7 +106,7 @@ const EditForm = ({params}) => {
             toast.success('Form updated successfully');
          }
     }
-    console.log(record?.id)
+   
   return (
     <div className='p-10'>
         <div className=" flex items-center justify-between">
@@ -121,8 +136,6 @@ const EditForm = ({params}) => {
                 </RWebShare>
 
                 
-
-                
             </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -139,6 +152,9 @@ const EditForm = ({params}) => {
                     updateControllerFields(value,'background')
                     setSelectedBackground(value)
                 }}
+                setUserSignIn = {(value)=>{
+                    updateControllerFields(value,'enableUserSignIN')
+                }}
                 />
 
             </div>
@@ -147,13 +163,14 @@ const EditForm = ({params}) => {
             <div className="  md:col-span-2 border rounded-lg p-5  flex items-center justify-center"
             style={{backgroundImage:selectedBackground}}
             >
-                <FormUi 
+                {record && <FormUi 
                  jsonResult = {jsonResult}
                  onUpdate={onFieldUpdate}
                  handleDelete={(index)=> onDelete(index)}
                  selectedTheme={selectedTheme}
                  formId={record?.id}
-                 />
+                 enabledUserSignIn = {record?.enableUserSignIn}
+                 />}
             </div>
         </div>
     </div>

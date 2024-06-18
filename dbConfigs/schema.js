@@ -1,3 +1,5 @@
+import { boolean } from "drizzle-orm/mysql-core";
+
 const { pgTable, serial, text, varchar, integer } = require("drizzle-orm/pg-core");
 
 export const JsonForms = pgTable('jsonForms', {
@@ -6,7 +8,8 @@ export const JsonForms = pgTable('jsonForms', {
     theme: varchar('theme'),
     background: varchar('background'),
     createdBy: varchar('createdBy').notNull(),
-    createdAt: varchar('createdAt').notNull()
+    createdAt: varchar('createdAt').notNull(),
+    enableUserSignIN:boolean('enableUserSignIN').default(false)
 });
 
 export const userResponses = pgTable('userResponses', {
